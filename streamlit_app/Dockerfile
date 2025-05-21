@@ -3,7 +3,7 @@ FROM python:3.9
 WORKDIR /app
 
 # System packages
-RUN apt-get update && apt-get install -y docker.io
+# RUN apt-get update && apt-get install -y docker.io
 
 COPY ../docker_wheels /wheels
 
