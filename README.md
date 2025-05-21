@@ -1,5 +1,5 @@
 # Autonomous Security Control on NGINX
-This project shows how multiple different types of security controls can get combined to form a new type of security control. Here we combine "detective", "compensative", "corrective" control types to become a "preventive" control. In total we might call this a "autonomous security control", which manages the healthiness of a webservice.
+This project shows how multiple different types of security controls can get combined to form a new type of security control. Here we combine "detective", "compensative", "corrective" control types to become a "preventive" control. In total we might call this "autonomous security control", which manages the healthiness of a webservice.
 
 In this project there are the following elements being used:
 * NGINX image
