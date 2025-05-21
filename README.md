@@ -17,7 +17,7 @@ preventive - NGINX use of block list
 This project shall demonstrate how easy it would be to design an autonomous security control and therefore acts as motivator for developers and solution designers to incorporate similar security controls into any application they would be designing.
 
 ## Components
-![Detailed Component Diagram](./docs/autonomous control.drawio.svg)
+![Detailed Component Diagram]("./docs/autonomous control.drawio.svg")
 ## Installation
 
 
