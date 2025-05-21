@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./logs:/var/log/nginx
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./shared:/shared
+      - ./shared_code:/shared_code
+    restart: on-failure
+
+  streamlit:
+    build:
+      context: ./streamlit_app
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./logs:/logs
+      - ./model:/model
+      - ./shared:/shared
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./streamlit_app/app:/app
+      - ./shared_code:/shared_code
+    environment:
+      - PYTHONPATH=/shared_code
+  
+  trainer:
+    build: ./trainer
+    command: python trainer.py
+    volumes:
+      - ./logs:/logs
+      - ./model:/model
+      - ./shared:/shared
+    restart: on-failure
+
+  traffic-normal:
+    build: ./traffic_normal
+    volumes:
+      - ./shared:/shared
+
+  traffic-malicious:
+    build: ./traffic_malicious
+    volumes:
+      - ./shared:/shared
+      - ./shared_code:/shared_code
+    environment:
+      - PYTHONPATH=/shared_code
+

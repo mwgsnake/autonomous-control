@@ -1,0 +1,135 @@
+# app/main.py
+
+import streamlit as st
+from streamlit_autorefresh import st_autorefresh
+import os
+import json
+import time
+import pandas as pd
+
+from config import (
+    LOGFILE_PATH, N_LOG_LINES, THRESHOLD_PATH, TRAINING_TRIGGER, ATTACK_TRIGGER,
+    MODEL_PATH, SCALER_PATH, CUSTOM_RULES_PATH
+)
+from state import init_session_state, add_message, show_messages
+from log_utils import extract_features_with_line_numbers
+from model_utils import scale_features, load_model
+from nginx_utils import (
+    update_custom_rules_file, load_existing_rules, clear_custom_rules_file, reload_nginx
+)
+from ui_components import color_row
+import streamlit as st
+from ui_components import (
+    mode_switch_col, current_mode_col, attack_button_col, attack_status_col, copy_model_col, clear_rules_col
+)
+
+def main():
+    st.set_page_config(page_title="NGINX Traffic Demo", layout="wide")
+    st.header("NGINX Traffic: Training vs. Inference Mode Demo")
+    st_autorefresh(interval=2000, key="log_autorefresh")
+
+    # CSS Customization
+    st.markdown("""
+        <style>
+            html, body, [class*="css"]  { font-size:12px !important; }
+            .block-container { padding-top: 2.5rem !important; }
+            .stButton>button { padding:2px 8px !important; font-size:12px !important; }
+            .stRadio>div { flex-direction: row !important; gap: 10px !important; }
+            h1, h2, h3, h4 { margin-top: 2.5rem !important; margin-bottom: 0.5rem !important; }
+            .stSlider { padding-top: 0.2rem !important; padding-bottom: 0.2rem !important; }
+            .stDataFrame, .stTable { font-size: 11px !important; }
+            .stMarkdown { margin-bottom: 0.2rem !important; }
+            .stAlert { margin-bottom: 4px !important; }
+        </style>
+ """, unsafe_allow_html=True)
+
+    # Session State initialisieren
+    init_session_state()
+
+    # --- Mode Switch ---
+    st.markdown("### Mode-Switch")
+    try:
+        mode = st.radio("Modus", ("Training", "Inference"), horizontal=True, key="mode_radio")
+        training_mode = os.path.exists(TRAINING_TRIGGER)
+        if mode == "Training" and not training_mode:
+            open(TRAINING_TRIGGER, "w").close()
+            add_message("Training mode aktiviert.", "info")
+        elif mode == "Inference" and training_mode:
+            try:
+                os.remove(TRAINING_TRIGGER)
+                add_message("Training mode deaktiviert.", "info")
+            except Exception as e:
+                add_message(f"Could not deactivate training mode: {e}", "error")
+    except Exception as e:
+        add_message(f"Error on switching mode: {e}", "error")
+        mode = "Training" if os.path.exists(TRAINING_TRIGGER) else "Inference"
+
+    st.write(f"Current Mode: {mode}")
+
+    # --- Threshold laden ---
+    threshold = 0.0
+    if os.path.exists(THRESHOLD_PATH):
+        try:
+            with open(THRESHOLD_PATH) as f:
+                threshold = float(json.load(f).get("threshold", 0.0))
+        except Exception as e:
+            add_message(f"Fehler beim Laden des Thresholds: {e}", "warning")
+
+    # --- Threshold Slider ---
+    st.markdown("**Anomaly threshold**")
+    min_slider = 0.0
+    max_slider = threshold * 10 if threshold > 0 else 1.0
+    if min_slider < max_slider:
+        try:
+            new_threshold = st.slider(
+                "Adjust threshold",
+                min_value=min_slider,
+                max_value=max_slider,
+                value=threshold,
+                step=0.01,
+                format="%.2f",
+                key="threshold_slider"
+            )
+            if new_threshold != threshold:
+                try:
+                    with open(THRESHOLD_PATH, "w") as f:
+                        json.dump({"threshold": new_threshold}, f)
+                    add_message(f"Threshold updated to {new_threshold:.2f}.", "info")
+                    threshold = new_threshold
+                except Exception as e:
+                    add_message(f"Failed to save new threshold: {e}", "error")
+        except Exception as e:
+            add_message(f"Failed to display slider: {e}", "error")
+    else:
+        st.info("Threshold range too small for slider or was not set.")
+
+    # --- Logdaten laden und anzeigen ---
+    st.markdown("### Letzte Logzeilen")
+    try:
+        df = extract_features_with_line_numbers(LOGFILE_PATH, N_LOG_LINES)
+        if not df.empty:
+            st.dataframe(df.style.apply(color_row, axis=1))
+        else:
+            st.info("Keine Logeinträge gefunden.")
+    except Exception as e:
+        add_message(f"Fehler beim Laden/Anzeigen der Logdaten: {e}", "error")
+
+    # --- NGINX Reload Button ---
+    if st.button("Reload NGINX"):
+        try:
+            success = reload_nginx()
+            if success:
+                st.success("NGINX wurde neu geladen.")
+            else:
+                st.error("NGINX-Reload fehlgeschlagen.")
+        except Exception as e:
+            add_message(f"Fehler beim NGINX-Reload: {e}", "error")
+
+    # --- Statusmeldungen anzeigen ---
+    show_messages()
+
+if __name__ == "__main__":
+    main()
+
+
+

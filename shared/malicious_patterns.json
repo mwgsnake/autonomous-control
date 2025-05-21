@@ -1,0 +1,5 @@
+{
+  "urls": ["/admin", "/wp-login.php", "/api/secret", "/etc/password"],
+  "regex": ["/admin[0-9]{1,3}", "/wp-login\\.php\\?user=[a-z]{4,8}"]
+}
+

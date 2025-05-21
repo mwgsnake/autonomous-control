@@ -1,0 +1,199 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Detailed Component Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Shared Volume -->
+        <mxCell id="100" value="&#xab;package&#xbb;&#xa;shared" style="shape=umlPackage;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="30" width="200" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="101" value="&#xab;component&#xbb;&#xa;custom_rules.conf" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="100">
+          <mxGeometry x="20" y="30" width="130" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="102" value="&#xab;component&#xbb;&#xa;reload_nginx.trigger" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="100">
+          <mxGeometry x="20" y="70" width="130" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="103" value="&#xab;component&#xbb;&#xa;access.log" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="100">
+          <mxGeometry x="20" y="110" width="130" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="104" value="&#xab;component&#xbb;&#xa;scaler.pkl" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="100">
+          <mxGeometry x="20" y="150" width="130" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="105" value="&#xab;component&#xbb;&#xa;threshold.txt" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="100">
+          <mxGeometry x="20" y="190" width="130" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- Model Package -->
+        <mxCell id="200" value="&#xab;package&#xbb;&#xa;model" style="shape=umlPackage;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="30" width="180" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="201" value="&#xab;component&#xbb;&#xa;autoencoder_model.h5" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="200">
+          <mxGeometry x="20" y="30" width="140" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- Trainer Package -->
+        <mxCell id="300" value="&#xab;package&#xbb;&#xa;trainer" style="shape=umlPackage;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="200" height="230" as="geometry"/>
+        </mxCell>
+        <mxCell id="301" value="&#xab;component&#xbb;&#xa;trainer.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="300">
+          <mxGeometry x="20" y="30" width="110" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="302" value="&#xab;module&#xbb;&#xa;extract_features" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="301">
+          <mxGeometry x="10" y="10" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="303" value="&#xab;module&#xbb;&#xa;safe_model_save" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="301">
+          <mxGeometry x="10" y="32" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="304" value="&#xab;module&#xbb;&#xa;train_and_save_model" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="301">
+          <mxGeometry x="10" y="54" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="305" value="&#xab;module&#xbb;&#xa;load_scaler" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="301">
+          <mxGeometry x="10" y="76" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="306" value="&#xab;module&#xbb;&#xa;load_threshold" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="301">
+          <mxGeometry x="10" y="98" width="90" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Streamlit Package -->
+        <mxCell id="400" value="&#xab;package&#xbb;&#xa;streamlit" style="shape=umlPackage;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="300" width="350" height="400" as="geometry"/>
+        </mxCell>
+        <mxCell id="401" value="&#xab;component&#xbb;&#xa;main.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="30" width="110" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="402" value="&#xab;component&#xbb;&#xa;nginx_utils.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="70" width="110" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="403" value="&#xab;component&#xbb;&#xa;ui_components.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="110" width="120" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="404" value="&#xab;component&#xbb;&#xa;log_utils.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="150" width="110" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="405" value="&#xab;component&#xbb;&#xa;model_utils.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="190" width="110" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="406" value="&#xab;component&#xbb;&#xa;slider_component.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="230" width="140" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="407" value="&#xab;component&#xbb;&#xa;state.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="270" width="90" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="408" value="&#xab;component&#xbb;&#xa;anomaly_visualizer.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="310" width="150" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="409" value="&#xab;component&#xbb;&#xa;message_queue.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="350" width="130" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="410" value="&#xab;component&#xbb;&#xa;policy_generator.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="400">
+          <mxGeometry x="20" y="390" width="130" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="411" value="&#xab;module&#xbb;&#xa;draw_slider" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="406">
+          <mxGeometry x="10" y="10" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="412" value="&#xab;module&#xbb;&#xa;draw_buttons" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="403">
+          <mxGeometry x="10" y="10" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="413" value="&#xab;module&#xbb;&#xa;draw_toggle" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="403">
+          <mxGeometry x="10" y="32" width="90" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- NGINX Package -->
+        <mxCell id="500" value="&#xab;package&#xbb;&#xa;nginx" style="shape=umlPackage;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="150" width="180" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="501" value="&#xab;component&#xbb;&#xa;nginx.conf" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="500">
+          <mxGeometry x="20" y="30" width="110" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="502" value="&#xab;component&#xbb;&#xa;includes custom_rules.conf" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="500">
+          <mxGeometry x="20" y="70" width="150" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- nginx-reload-watcher -->
+        <mxCell id="600" value="&#xab;package&#xbb;&#xa;nginx-reload-watcher" style="shape=umlPackage;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="300" width="200" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="601" value="&#xab;component&#xbb;&#xa;watchdog.sh" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="600">
+          <mxGeometry x="20" y="30" width="110" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="602" value="&#xab;module&#xbb;&#xa;watch_trigger" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="601">
+          <mxGeometry x="10" y="10" width="90" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Traffic Normal -->
+        <mxCell id="700" value="&#xab;package&#xbb;&#xa;traffic-normal" style="shape=umlPackage;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="660" width="200" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="701" value="&#xab;component&#xbb;&#xa;generate_normal_traffic.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="700">
+          <mxGeometry x="20" y="30" width="150" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="702" value="&#xab;module&#xbb;&#xa;send_requests" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="701">
+          <mxGeometry x="10" y="10" width="90" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Traffic Malicious -->
+        <mxCell id="800" value="&#xab;package&#xbb;&#xa;traffic_malicious" style="shape=umlPackage;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="660" width="200" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="801" value="&#xab;component&#xbb;&#xa;generate_malicious_traffic.py" style="shape=umlComponent;whiteSpace=wrap;html=1;" vertex="1" parent="800">
+          <mxGeometry x="20" y="30" width="170" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="802" value="&#xab;module&#xbb;&#xa;send_requests" style="shape=umlModule;whiteSpace=wrap;html=1;" vertex="1" parent="801">
+          <mxGeometry x="10" y="10" width="90" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Dependencies -->
+        <mxCell id="dep1" value="writes model" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="301" target="201">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep2" value="reads model" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="405" target="201">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep3" value="writes scaler" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="301" target="104">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep4" value="writes threshold" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="301" target="105">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep5" value="reads scaler" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="405" target="104">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep6" value="reads threshold" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="405" target="105">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep7" value="writes block rules" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="402" target="101">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep8" value="writes reload trigger" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="402" target="102">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep9" value="reads logs" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="404" target="103">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep10" value="sends HTTP requests" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="701" target="500">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep11" value="sends HTTP requests" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="801" target="500">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep12" value="writes logs" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="500" target="103">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep13" value="includes for blocking" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="101" target="502">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep14" value="watches trigger, reloads nginx" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="602" target="102">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep15" value="reads model" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="410" target="201">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep16" value="reads model" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;dashed=1;" edge="1" parent="1" source="408" target="201">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

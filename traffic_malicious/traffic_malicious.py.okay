@@ -1,0 +1,31 @@
+import requests
+import time
+import random
+import os
+
+NGINX_HOST = "http://nginx:80"
+MALICIOUS_PATHS = ["/admin", "/wp-login.php", "/api/secret", "/etc/passwd"]
+MALICIOUS_RATE = 2  # pro Sekunde
+MALICIOUS_DURATION = 20  # Sekunden
+SHARED_TRIGGER = "/shared/trigger_attack"
+
+while True:
+    if os.path.exists(SHARED_TRIGGER):
+        print("Malicious traffic gestartet!")
+        end_time = time.time() + MALICIOUS_DURATION
+        while time.time() < end_time:
+            path = random.choice(MALICIOUS_PATHS)
+            url = NGINX_HOST + path
+            try:
+                requests.get(url, timeout=1)
+            except Exception:
+                pass
+            time.sleep(1.0 / MALICIOUS_RATE)
+        print("Malicious traffic beendet.")
+        try:
+            os.remove(SHARED_TRIGGER)
+        except Exception:
+            pass
+    else:
+        time.sleep(0.5)
+
